@@ -18,8 +18,37 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+/// <summary>
+/// Represents a weather forecast.
+/// </summary>
+internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
+{
+    /// <summary>
+    /// Gets the date of the weather forecast.
+    /// </summary>
+    public DateTime Date { get; init; }
+
+    /// <summary>
+    /// Gets the temperature in Celsius.
+    /// </summary>
+    public int TemperatureC { get; init; }
+
+    /// <summary>
+    /// Gets the temperature in Fahrenheit.
+    /// </summary>
+    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+
+    /// <summary>
+    /// Gets the summary of the weather forecast.
+    /// </summary>
+    public string? Summary { get; init; }
+}
+
 app.MapGet("/weatherforecast", () =>
 {
+    /// <summary>
+    /// Retrieves the weather forecast.
+    /// </summary>
     var forecast = new WeatherForecast
     (
         DateTime.Now,
@@ -32,8 +61,4 @@ app.MapGet("/weatherforecast", () =>
 
 app.Run();
 
-// Helper class
-internal record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
+app.MapGet("/", () => "Hello from the minimal API!");
